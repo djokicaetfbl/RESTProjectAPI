@@ -12,9 +12,8 @@ namespace MusicApi
 
             // Add services to the container.
 
-
-
             builder.Services.AddControllers();
+            builder.Services.AddMvc().AddXmlSerializerFormatters(); // inside postman, when set headers to application/xml to see response as xml
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -33,14 +32,11 @@ namespace MusicApi
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
                 // use context
-                dbContext.Database.EnsureCreated(); // check if database exist, if exist than do not create database, otherwise create database
+                dbContext.Database.EnsureCreated(); // check if database exist, if exist than do not create database, otherwise create database. This do not register code first approach changes
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();
