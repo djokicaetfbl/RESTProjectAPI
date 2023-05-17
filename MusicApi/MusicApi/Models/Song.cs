@@ -25,7 +25,7 @@ namespace MusicApi.Models
         public string? ImageUrl { get; set; }
         [NotMapped]
         public IFormFile AudioFile { get; set; }
-        public string AudioUrl { get; set; }
+        public string? AudioUrl { get; set; }
         public int ArtistId { get; set; }
         public int? AlbumId { get; set; } // postoji pjesma koja nije ni na jednom albumu
 

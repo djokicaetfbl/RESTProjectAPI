@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicApi.Data;
 
@@ -11,9 +12,11 @@ using MusicApi.Data;
 namespace MusicApi.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230515094442_update-model")]
+    partial class updatemodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,6 +37,7 @@ namespace MusicApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -86,6 +90,7 @@ namespace MusicApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AudioUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Duration")
@@ -107,8 +112,6 @@ namespace MusicApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArtistId");
-
                     b.ToTable("Songs");
                 });
 
@@ -121,20 +124,9 @@ namespace MusicApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MusicApi.Models.Song", b =>
-                {
-                    b.HasOne("MusicApi.Models.Artist", null)
-                        .WithMany("Songs")
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MusicApi.Models.Artist", b =>
                 {
                     b.Navigation("Albums");
-
-                    b.Navigation("Songs");
                 });
 #pragma warning restore 612, 618
         }
